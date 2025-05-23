@@ -13,11 +13,11 @@ function App() {
 
       <h2>count: {count}</h2>
       <button onClick={() => setCount(count + 1)}>
-        Press the button
+        Up button
       </button>
   
       <button onClick={() => setCount(count - 1)}>
-        Unpress the button
+        Down button
       </button>
     </div>
   );
