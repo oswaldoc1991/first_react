@@ -5,6 +5,23 @@
   text-align: center;
 }
 
+li {
+  display: flex;
+  align-items: center;
+  gap: 10;
+}
+
+button {
+  padding: 5px;
+  border: none;
+  background-color: lightblue;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: skyblue;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
