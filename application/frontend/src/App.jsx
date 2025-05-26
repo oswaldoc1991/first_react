@@ -6,6 +6,7 @@ function App() {
 
   const [task, setTask] = useState('');
   const [tasks, setTasks] = useState([]);
+  const [darkMode, setDarkMode] = useState(false);
 
   // loading the task from the local storage when the app stores
   useEffect(() => {
@@ -40,14 +41,35 @@ function App() {
     ));
   };
 
+  const handleStartEditing = (index) => {
+    setTasks(tasks.map((t, i) => i === index ? { ...t, isEditing: true } : t));
+  };
+
+  const handleEditTask = (index, newText) => {
+    setTasks(tasks.map((t, i) => i === index ? { ...t, text: newText } : t));
+  };
+
+  const handleSaveTask = (index) => {
+    setTasks(tasks.map((t, i) => i === index ? { ...t, isEditing: false } : t));
+  };
+
   return (
-    <div>
+    <div style={{
+      backgroundColor: darkMode ? '#333' : '#fff',
+      color: darkMode ? '#fff' : '#000',
+      minHeight: '100vh',
+      padding: '20px',
+    }}>
+      <button onClick={() => setDarkMode(!darkMode)}>
+        Toggle Dark Mode
+      </button>
+      
       <h1>Hello Everyone!!!!</h1>
       <p>This is my first custom component</p>
       <Greeting name="Oswaldo" />
 
-      <div style={{ margin: '20px'}}>
-        <input 
+      <div style={{margin: '20px'}}>
+        <input
           type='text'
           value={task}
           onChange={(e) => setTask(e.target.value)}
@@ -55,27 +77,42 @@ function App() {
         />
         <button onClick={handleAddTask}>Add Task</button>
       </div>
-
+      
       <ul>
-        {tasks.map((t, index) =>
-          <li 
+        {tasks.map((t, index) => (
+          <li
             key={index}
+            className={`task-item ${t.completed ? 'completed' : ''}`}
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: '10px',
-              textDecoration: t.completed? 'line-through' : 'none',
+              textDecoration: t.completed ? 'line-through' : 'none',
               color: t.completed ? 'grey' : 'black',
             }}
           >
-            {t.text}
-            <button onClick={() => handleDeleteTask(index)}>Delete</button>
-            <button onClick={() => handleToggleComplete(index)}>{t.completed ? 'Undo': 'Done'}</button>
+            {t.isEditing ? (
+              <>
+                <input
+                  type='text'
+                  value={t.text}
+                  onChange={(e) => handleEditTask(index, e.target.value)}
+                />
+                <button onClick={() => handleSaveTask(index)}>Save</button>
+              </>
+            ) : (
+              <>
+                {t.text}
+                <button onClick={() => handleDeleteTask(index)}>Delete</button>
+                <button onClick={() => handleToggleComplete(index)}>{t.completed ? 'Undo' : 'Done'}</button>
+                <button onClick={() => handleStartEditing(index)}>Edit</button>
+              </>
+            )}
           </li>
-        )}
+        ))}
       </ul>
     </div>
-  );
+  );      
 };
 
 export default App

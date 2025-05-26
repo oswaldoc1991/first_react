@@ -1,38 +1,63 @@
 #root {
-  max-width: 1280px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  font-family: sans-serif;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-li {
+.task-item {
+  transition: color 0.3s;
+  color: black;
+}
+
+.completed {
+  color: grey;
+}
+
+.dark-mode .task-item {
+  color: white;
+}
+
+.dark-mode .completed {
+  color: lightgrey;
+}
+
+/* li {
   display: flex;
   align-items: center;
-  gap: 10;
-}
+  gap: 10px;
+  margin-bottom: 10px;
+} */
 
-button {
-  padding: 5px;
+buttton {
+  background-color: blue;
+  color: lightblue;
   border: none;
-  background-color: lightblue;
+  border-radius: 5px;
+  padding: 5px 10px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 button:hover {
-  background-color: skyblue;
+  background-color: #0284c7;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+input [type='text'] {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius:  5px;
+  font-size: 1rem;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+h1,p {
+  transition: color 0.3s;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+
+li {
+  margin-bottom: 10px;
 }
 
 @keyframes logo-spin {
