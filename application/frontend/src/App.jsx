@@ -11,7 +11,7 @@ function App() {
   // loading the task from the local storage when the app stores
   useEffect(() => {
     const storedTasks = localStorage.getItem('tasks');
-    console.log("loaded from local storage:", storedTasks);
+    // console.log("loaded from local storage:", storedTasks);
     if (storedTasks) {
       setTasks(JSON.parse(storedTasks));
     }
@@ -54,7 +54,7 @@ function App() {
   };
 
   return (
-    <div style={{
+    <div className={darkMode ? 'dark-mode' : ''} style={{
       backgroundColor: darkMode ? '#333' : '#fff',
       color: darkMode ? '#fff' : '#000',
       minHeight: '100vh',
@@ -73,6 +73,11 @@ function App() {
           type='text'
           value={task}
           onChange={(e) => setTask(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleAddTask();
+            }
+          }}
           placeholder='Enter Task'
         />
         <button onClick={handleAddTask}>Add Task</button>
@@ -88,7 +93,7 @@ function App() {
               alignItems: 'center',
               gap: '10px',
               textDecoration: t.completed ? 'line-through' : 'none',
-              color: t.completed ? 'grey' : 'black',
+              // color: t.completed ? 'grey' : 'black',
             }}
           >
             {t.isEditing ? (
