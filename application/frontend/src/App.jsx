@@ -82,7 +82,15 @@ function App() {
         />
         <button onClick={handleAddTask}>Add Task</button>
       </div>
+
+      {/* tally button */}
+      <p>
+        Total Task: {tasks.length} |
+        Completed: {tasks.filter(t => t.completed).length} |
+        Remaining: {tasks.filter(t => !t.completed).length}
+      </p>
       
+      {/* whats going to be seen in the app line 87 to line 122 */}
       <ul>
         {tasks.map((t, index) => (
           <li
