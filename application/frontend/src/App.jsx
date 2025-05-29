@@ -8,6 +8,15 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
 
+  useEffect(() => {
+    const html = document.documentElement;
+    if (darkMode) {
+      html.classList.add('dark');
+    } else {
+      html.classList.remove('dark')
+    }
+  }, [darkMode]);
+
   // loading the task from the local storage when the app stores
   useEffect(() => {
     const storedTasks = localStorage.getItem('tasks');
