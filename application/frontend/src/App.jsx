@@ -53,56 +53,53 @@ function App() {
     setTasks(tasks.map((t, i) => i === index ? { ...t, isEditing: false } : t));
   };
 
-  return (
-    <div className={darkMode ? 'dark-mode' : ''} style={{
-      backgroundColor: darkMode ? '#333' : '#fff',
-      color: darkMode ? '#fff' : '#000',
-      minHeight: '100vh',
-      padding: '20px',
-    }}>
-      <button onClick={() => setDarkMode(!darkMode)}>
-        Toggle Dark Mode
-      </button>
-      
-      <h1>Hello Everyone!!!!</h1>
-      <p>This is my first custom component</p>
-      <Greeting name="Oswaldo" />
 
-      <div style={{margin: '20px'}}>
-        <input
+  return (
+    <div className={darkMode ? 'bg-grey-800 text-white min-h-screen p-4' : 'bg-white text-black min-h-screen p-4'}>
+      <button
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+        onClick={() => setDarkMode(!darkMode)}
+      >
+        Dark Mode
+      </button>
+
+      <h1 className="text-4xl font-bold my-4">Hello Everyone</h1>
+      <p className="text-lg mb-4">This is my first custom component</p>
+      <Greeting name="Oswaldo Cabrera"/>
+
+      <div className="my-4">
+        <input 
           type='text'
           value={task}
           onChange={(e) => setTask(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              handleAddTask();
-            }
-          }}
           placeholder='Enter Task'
+          className="border border-grey-300 rounded px-3 py-1 mr-2"
+          onKeyDown={(e) => e.key === 'Enter' && handleAddTask()}
         />
-        <button onClick={handleAddTask}>Add Task</button>
-      </div>
+
+        <button
+          onClick={handleAddTask}
+          className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition"
+        >
+        Add Task
+        </button>
+    </div>
 
       {/* tally button */}
       <p>
         Total Task: {tasks.length} |
-        Completed: {tasks.filter(t => t.completed).length} |
+        Completed: {tasks.filter(t => t.completed).length}
         Remaining: {tasks.filter(t => !t.completed).length}
       </p>
       
       {/* whats going to be seen in the app line 87 to line 122 */}
-      <ul>
+      <ul className='space-y-2'>
         {tasks.map((t, index) => (
           <li
             key={index}
-            className={`task-item ${t.completed ? 'completed' : ''}`}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              textDecoration: t.completed ? 'line-through' : 'none',
-              // color: t.completed ? 'grey' : 'black',
-            }}
+            className={`flex item-center gap-2 ${
+              t.completed ? 'line-through text-gray-400' : ''
+            } flex item-center gap-2 p-2 border-b border-gray-300`}
           >
             {t.isEditing ? (
               <>
@@ -110,15 +107,16 @@ function App() {
                   type='text'
                   value={t.text}
                   onChange={(e) => handleEditTask(index, e.target.value)}
+                  className='border border-gray-300 rounded px-2 py-1'
                 />
-                <button onClick={() => handleSaveTask(index)}>Save</button>
+                <button onClick={() => handleSaveTask(index)} className='bg-yellow-400 text-black px-2 py-1 rounded hover:bg-yellow-500 transition'>Save</button>
               </>
             ) : (
               <>
                 {t.text}
-                <button onClick={() => handleDeleteTask(index)}>Delete</button>
-                <button onClick={() => handleToggleComplete(index)}>{t.completed ? 'Undo' : 'Done'}</button>
-                <button onClick={() => handleStartEditing(index)}>Edit</button>
+                <button onClick={() => handleDeleteTask(index)} className='bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition'>Delete</button>
+                <button onClick={() => handleToggleComplete(index)} className='bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition'>{t.completed ? 'Undo' : 'Done'}</button>
+                <button onClick={() => handleStartEditing(index)} className='bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition'>Edit</button>
               </>
             )}
           </li>
