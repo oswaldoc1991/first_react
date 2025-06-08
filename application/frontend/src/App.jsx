@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css'
 import Greeting from "./Greeting";
+import NavBar from './NavBar';
 
 function App() {
 
@@ -54,7 +55,10 @@ function App() {
 
 
   return (
-    <div className={'bg-white text-black min-h-screen p-4'}>
+    <div className="bg-white text-black min-h-screen">
+
+      {/* NavBar for website */}
+      <NavBar /> 
 
       <h1 className="text-4xl font-bold my-4">Hello Everyone</h1>
       <p className="text-lg mb-4">This is my first custom component</p>
@@ -119,4 +123,4 @@ function App() {
   );      
 };
 
-export default App
+export default App;
