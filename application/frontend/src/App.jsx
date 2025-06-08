@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import './App.css'
 import Greeting from "./Greeting";
 import NavBar from './NavBar';
+import Footer from'./Footer';
+import Hero from './Hero';
 
 function App() {
 
@@ -59,7 +61,10 @@ function App() {
 
       {/* NavBar for website */}
       <NavBar /> 
+      
+      <Hero />
 
+      {/* Title of the website */}
       <h1 className="text-4xl font-bold my-4">Hello Everyone</h1>
       <p className="text-lg mb-4">This is my first custom component</p>
       <Greeting name="Oswaldo Cabrera"/>
@@ -119,6 +124,9 @@ function App() {
           </li>
         ))}
       </ul>
+      
+      {/* Footer for the website */}
+      <Footer />
     </div>
   );      
 };
