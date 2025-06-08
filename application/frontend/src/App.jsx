@@ -28,7 +28,7 @@ function App() {
   // adding new task into the website
   const handleAddTask = () => {
     if (task.trim() === '') return;
-    setTasks([...tasks, {text: task, completed: false }]);
+    setTasks([...tasks, {text: task, completed: false, priority: 'medium' }]);
     setTask('');
   };
 
@@ -61,72 +61,80 @@ function App() {
 
       {/* NavBar for website */}
       <NavBar /> 
-      
-      <Hero />
 
-      {/* Title of the website */}
-      <h1 className="text-4xl font-bold my-4">Hello Everyone</h1>
-      <p className="text-lg mb-4">This is my first custom component</p>
-      <Greeting name="Oswaldo Cabrera"/>
+      <main className='flex-grow max-w-3xl mx-auto px-4'>
+        {/* hero section for the website */}
+        <Hero />
 
-      <div className="my-4">
-        <input 
-          type='text'
-          value={task}
-          onChange={(e) => setTask(e.target.value)}
-          placeholder='Enter Task'
-          className="border border-grey-300 rounded px-3 py-1 mr-2"
-          onKeyDown={(e) => e.key === 'Enter' && handleAddTask()}
-        />
+        {/* Title of the website */}
+        <h1 className="text-4xl font-bold my-4">Hello Everyone</h1>
+        <p className="text-lg mb-4">This is my first custom component</p>
+        <Greeting name="Everyone"/>
 
-        <button
-          onClick={handleAddTask}
-          className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition"
-        >
-        Add Task
-        </button>
-    </div>
+        <div className="my-4">
+          <input 
+            type='text'
+            value={task}
+            onChange={(e) => setTask(e.target.value)}
+            placeholder='Enter Task'
+            className="border border-grey-300 rounded px-3 py-1 mr-2"
+            onKeyDown={(e) => e.key === 'Enter' && handleAddTask()}
+          />
 
-      {/* tally button */}
-      <p>
-        Total Task: {tasks.length} |
-        Completed: {tasks.filter(t => t.completed).length}
-        Remaining: {tasks.filter(t => !t.completed).length}
-      </p>
-      
-      {/* whats going to be seen in the app line 87 to line 122 */}
-      <ul className='space-y-2'>
-        {tasks.map((t, index) => (
-          <li
-            key={index}
-            className={`flex item-center gap-2 ${
-              t.completed ? 'line-through text-gray-400' : ''
-            } flex item-center gap-2 p-2 border-b border-gray-300`}
+          <button
+            onClick={handleAddTask}
+            className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition"
           >
-            {t.isEditing ? (
-              <>
-                <input
-                  type='text'
-                  value={t.text}
-                  onChange={(e) => handleEditTask(index, e.target.value)}
-                  className='border border-gray-300 rounded px-2 py-1'
-                />
-                <button onClick={() => handleSaveTask(index)} className='bg-yellow-400 text-black px-2 py-1 rounded hover:bg-yellow-500 transition'>Save</button>
-              </>
-            ) : (
-              <>
-                {t.text}
-                <button onClick={() => handleDeleteTask(index)} className='bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition'>Delete</button>
-                <button onClick={() => handleToggleComplete(index)} className='bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition'>{t.completed ? 'Undo' : 'Done'}</button>
-                <button onClick={() => handleStartEditing(index)} className='bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition'>Edit</button>
-              </>
-            )}
-          </li>
-        ))}
-      </ul>
-      
+          Add Task
+          </button>
+      </div>
+
+        {/* tally button */}
+        <p>
+          Total Task: {tasks.length} |
+          Completed: {tasks.filter(t => t.completed).length} |
+          Remaining: {tasks.filter(t => !t.completed).length}
+        </p>
+        
+        {/* whats going to be seen in the app line 87 to line 122 */}
+        <ul className='space-y-2'>
+          {tasks.map((t, index) => (
+            <li
+              key={index}
+              className={`flex items-center gap-2 ${
+                t.completed ? 'line-through text-gray-400' : ''
+              }`}
+            >
+              {t.isEditing ? (
+                <>
+                  <input
+                    type='text'
+                    value={t.text}
+                    onChange={(e) => handleEditTask(index, e.target.value)}
+                    className='border border-gray-300 rounded px-2 py-1'
+                  />
+                  <button onClick={() => handleSaveTask(index)} className='bg-yellow-400 text-black px-2 py-1 rounded hover:bg-yellow-500 transition'>Save</button>
+                </>
+              ) : (
+                <>
+                  {t.text}
+                  <button onClick={() => handleDeleteTask(index)} className='bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition'>Delete</button>
+                  <button onClick={() => handleToggleComplete(index)} className='bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition'>{t.completed ? 'Undo' : 'Done'}</button>
+                  <button onClick={() => handleStartEditing(index)} className='bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition'>Edit</button>
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+        {tasks.length === 0 && (
+          <p className='text-gray-500 italic mt-4'>No Tasks yet. Add one above!</p>
+        )}
+      </main>
+
       {/* Footer for the website */}
-      <Footer />
+      <div className='mt-12'>
+        <Footer />
+      </div>
     </div>
   );      
 };
