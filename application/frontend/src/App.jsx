@@ -6,16 +6,6 @@ function App() {
 
   const [task, setTask] = useState('');
   const [tasks, setTasks] = useState([]);
-  const [darkMode, setDarkMode] = useState(false);
-
-  useEffect(() => {
-    const html = document.documentElement;
-    if (darkMode) {
-      html.classList.add('dark');
-    } else {
-      html.classList.remove('dark')
-    }
-  }, [darkMode]);
 
   // loading the task from the local storage when the app stores
   useEffect(() => {
@@ -64,13 +54,7 @@ function App() {
 
 
   return (
-    <div className={darkMode ? 'bg-grey-800 text-white min-h-screen p-4' : 'bg-white text-black min-h-screen p-4'}>
-      <button
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-        onClick={() => setDarkMode(!darkMode)}
-      >
-        Dark Mode
-      </button>
+    <div className={'bg-white text-black min-h-screen p-4'}>
 
       <h1 className="text-4xl font-bold my-4">Hello Everyone</h1>
       <p className="text-lg mb-4">This is my first custom component</p>
