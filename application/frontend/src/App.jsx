@@ -4,11 +4,16 @@ import Greeting from "./Greeting";
 import NavBar from './NavBar';
 import Footer from'./Footer';
 import Hero from './Hero';
+import TaskList from './TaskList';
 
 function App() {
 
   const [task, setTask] = useState('');
   const [tasks, setTasks] = useState([]);
+
+  // new state for category and priority
+  const [category, setCategory] = useState('');
+  const [priority, setPriority] = useState('medium');
 
   // loading the task from the local storage when the app stores
   useEffect(() => {
@@ -25,11 +30,22 @@ function App() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
-  // adding new task into the website
+  // adding priority and category into the website
   const handleAddTask = () => {
     if (task.trim() === '') return;
-    setTasks([...tasks, {text: task, completed: false, priority: 'medium' }]);
+    setTasks([
+      ...tasks,
+      {
+        text: task,
+        completed: false,
+        isEditing: false,
+        priority, // adding priority
+        category // adding category
+      }
+    ]);
     setTask('');
+    setPriority('medium'); // resetting priority
+    setCategory(''); // reseting category
   };
 
   // deleting the task from the website
@@ -77,9 +93,31 @@ function App() {
             value={task}
             onChange={(e) => setTask(e.target.value)}
             placeholder='Enter Task'
-            className="border border-grey-300 rounded px-3 py-1 mr-2"
+            className="border border-grey-300 rounded px-3 py-1"
             onKeyDown={(e) => e.key === 'Enter' && handleAddTask()}
           />
+
+           {/* drop down box for what type of task and priority */}
+      <select
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+        className="border border-gray-300 rounded px-2 py-1"
+      >
+        <option value="">Select Category</option>
+        <option value="Work">Work</option>
+        <option value="Personal">Personal</option>
+        <option value="School">School</option>
+      </select>
+
+      <select
+        value={priority}
+        onChange={(e) => setPriority(e.target.value)}
+        className="border border-gray-300 rounded px-2 py-1"
+      >
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
 
           <button
             onClick={handleAddTask}
@@ -91,41 +129,21 @@ function App() {
 
         {/* tally button */}
         <p>
-          Total Task: {tasks.length} |
-          Completed: {tasks.filter(t => t.completed).length} |
-          Remaining: {tasks.filter(t => !t.completed).length}
+          Total Tasks: {tasks.length} |
+          Completed Tasks: {tasks.filter(t => t.completed).length} |
+          Remaining : {tasks.filter(t => !t.completed).length}
         </p>
-        
-        {/* whats going to be seen in the app line 87 to line 122 */}
-        <ul className='space-y-2'>
-          {tasks.map((t, index) => (
-            <li
-              key={index}
-              className={`flex items-center gap-2 ${
-                t.completed ? 'line-through text-gray-400' : ''
-              }`}
-            >
-              {t.isEditing ? (
-                <>
-                  <input
-                    type='text'
-                    value={t.text}
-                    onChange={(e) => handleEditTask(index, e.target.value)}
-                    className='border border-gray-300 rounded px-2 py-1'
-                  />
-                  <button onClick={() => handleSaveTask(index)} className='bg-yellow-400 text-black px-2 py-1 rounded hover:bg-yellow-500 transition'>Save</button>
-                </>
-              ) : (
-                <>
-                  {t.text}
-                  <button onClick={() => handleDeleteTask(index)} className='bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition'>Delete</button>
-                  <button onClick={() => handleToggleComplete(index)} className='bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition'>{t.completed ? 'Undo' : 'Done'}</button>
-                  <button onClick={() => handleStartEditing(index)} className='bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition'>Edit</button>
-                </>
-              )}
-            </li>
-          ))}
-        </ul>
+
+        {/* improved version of handling tasks */}
+        <TaskList 
+          tasks={tasks}
+          onDelete={handleDeleteTask}
+          onToggleComplete={handleToggleComplete}
+          onStartEditing={handleStartEditing}
+          onEdit={handleEditTask}
+          onSave={handleSaveTask}
+        />
+
         {tasks.length === 0 && (
           <p className='text-gray-500 italic mt-4'>No Tasks yet. Add one above!</p>
         )}
