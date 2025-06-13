@@ -10,6 +10,8 @@ function App() {
 
   const [task, setTask] = useState('');
   const [tasks, setTasks] = useState([]);
+  const [filter, setFilter] = useState('all');
+  const [search, setSearch] = useState('');
 
   // new state for category and priority
   const [category, setCategory] = useState('');
@@ -71,6 +73,15 @@ function App() {
     setTasks(tasks.map((t, i) => i === index ? { ...t, isEditing: false } : t));
   };
 
+  const filteredTasks = tasks.filter((task) => {
+          const matchesFilter =
+            filter === 'completed' ? task.completed :
+            filter === 'incomplete' ? !task.completed :
+            true;
+          const matchesSearch = task.text.toLowerCase().includes(search.toLowerCase());
+
+          return matchesFilter && matchesSearch;
+        });
 
   return (
     <div className="bg-white text-black min-h-screen">
@@ -87,13 +98,13 @@ function App() {
         <p className="text-lg mb-4">This is my first custom component</p>
         <Greeting name="Everyone"/>
 
-        <div className="my-4">
+        <div className="my-4 flex flex-wrap gap-2 items-center">
           <input 
             type='text'
             value={task}
             onChange={(e) => setTask(e.target.value)}
             placeholder='Enter Task'
-            className="border border-grey-300 rounded px-3 py-1"
+            className="border border-gray-300 rounded px-3 py-1 mr-2"
             onKeyDown={(e) => e.key === 'Enter' && handleAddTask()}
           />
 
@@ -101,7 +112,7 @@ function App() {
       <select
         value={category}
         onChange={(e) => setCategory(e.target.value)}
-        className="border border-gray-300 rounded px-2 py-1"
+        className="border border-gray-300 rounded px-2 py-1 mr-2"
       >
         <option value="">Select Category</option>
         <option value="Work">Work</option>
@@ -112,16 +123,17 @@ function App() {
       <select
         value={priority}
         onChange={(e) => setPriority(e.target.value)}
-        className="border border-gray-300 rounded px-2 py-1"
+        className="border border-gray-300 rounded px-2 py-1 mr-2"
       >
-        <option value="Low">Low</option>
-        <option value="Medium">Medium</option>
-        <option value="High">High</option>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
       </select>
 
           <button
             onClick={handleAddTask}
-            className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition"
+            disabled={task.trim() === ''}
+            className={`px-3 py-1 rounded transition ${task.trim() === '' ? 'bg-gray-300 text-gray-700 cursor-not-allowed' : 'bg-green-500 text-white hover:bg-green-600' }`}
           >
           Add Task
           </button>
@@ -134,9 +146,48 @@ function App() {
           Remaining : {tasks.filter(t => !t.completed).length}
         </p>
 
+        {/* search bar */}
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search Tasks"
+          className="border border-gray-300 rounded px-3 py-1 mb-2 w-full"
+        />
+
+        {/* filter */}
+        <div className="my-4 space-x-2">
+          <button
+            onClick={() => setFilter('all')}
+            className={`px-3 py-1 rounded ${
+              filter === 'all' ? 'bg-blue-700' : 'bg-blue-500'
+            } text-white hover:bg-blue-600`}
+          >
+            All
+          </button>
+
+          <button
+            onClick={() => setFilter('completed')}
+            className={`px-3 py-1 rounded ${
+              filter === 'completed' ? 'bg-green-700' : 'bg-green-500'
+            } text-white hover:bg-green-600`}
+          >
+            Completed
+          </button>
+
+          <button
+            onClick={() => setFilter('incomplete')}
+            className={`px-3 py-1 rounded ${
+              filter === 'incomplete' ? 'bg-yellow-600' : 'bg-yellow-500'
+            } text-white hover:bg-yellow-600`}
+          >
+            Incomplete
+          </button>
+        </div>
+
         {/* improved version of handling tasks */}
         <TaskList 
-          tasks={tasks}
+          tasks={filteredTasks}
           onDelete={handleDeleteTask}
           onToggleComplete={handleToggleComplete}
           onStartEditing={handleStartEditing}

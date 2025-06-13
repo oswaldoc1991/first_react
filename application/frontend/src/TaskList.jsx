@@ -1,4 +1,11 @@
 function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, onSave }) {
+
+  const filteredTask = tasks.filter((task) => {
+    if (filter === 'completed') return task.completed;
+    if (filter === 'incompleted') return !task.completed;
+    return true;
+  });
+
   return (
     <ul className="space-y-2 mt-4">
       {tasks.map((t, index) => (
@@ -14,8 +21,14 @@ function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, o
             ) : (
               <>
                 <span className="font-medium">{t.text}</span>
-                <span className="text-sm italic text-gray-500">[{t.category || 'Uncategorized'}]</span>
-                <span className="text-sm text-gray-600 capitalize">{t.priority}</span>
+                <div className="flex items-center gap-2 mt-1 sm:mt-0">
+                  <span className="text-sm italic text-gray-500">[{t.category || 'Uncategorized'}]</span>
+                  <span
+                    className="text-sm text-gray-700 capitalize"
+                  >
+                    {t.priority}
+                  </span>
+                </div>
               </>
             )}
           </div>
