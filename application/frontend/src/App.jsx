@@ -78,6 +78,21 @@ function App() {
     setTasks(tasks.map((t, i) => i === index ? { ...t, isEditing: false } : t));
   };
 
+// editing priority
+  const handleEditPriority = (index, newPriority) => {
+    setTasks(tasks.map((t, i) => i === index ? { ...t, priority: newPriority} : t));
+  };
+
+// handling any editing category
+  const handleEditCategory = (index, newCategory) => {
+    setTasks(tasks.map((t, i) => i === index ? { ...t, category: newCategory} : t));
+  };
+
+  // handling any and new due dates
+  const handleDueDate = (index, newDueDate) => {
+    setTasks(tasks.map((t, i) => i === index ? { ...t, dueDate: newDueDate} : t));
+  }; 
+
   const filteredTasks = tasks.filter((task) => {
           const matchesFilter =
             filter === 'completed' ? task.completed :
@@ -205,6 +220,9 @@ function App() {
           onStartEditing={handleStartEditing}
           onEdit={handleEditTask}
           onSave={handleSaveTask}
+          onEditPriority={handleEditPriority}
+          onEditCategory={handleEditCategory}
+          onEditDueDate={handleDueDate}
         />
 
         {tasks.length === 0 && (

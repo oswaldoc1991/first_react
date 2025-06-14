@@ -1,4 +1,4 @@
-function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, onSave }) {
+function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, onSave, onEditPriority, onEditCategory, onEditDueDate}) {
   return (
     <ul className="space-y-2 mt-4">
       {tasks.map((t, index) => (
@@ -6,7 +6,48 @@ function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, o
           <div className="flex flex-col sm:flex-row sm:items-center sm:gap-3">
             {t.isEditing ? (
               <>
-                <input type="text" value={t.text} onChange={(e) => onEdit(index, e.target.value)} />
+              {/* task text */}
+                <input
+                 type="text" 
+                  value={t.text} 
+                  onChange={(e) => onEdit(index, e.target.value)} 
+                  className="border px-2 py-1 rounded mb-1"
+                 />
+
+                 {/* due date */}
+                 <input 
+                  type="date"
+                  value={t.dueDate || ''}
+                  onChange={(e) => onEditDueDate(index, e.target.value)}
+                  className="border px-2 py-1 rounded mb-1"
+                 />
+
+                 {/* priority selection */}
+                 <select
+                    value={t.priority}
+                    onChange={(e) => onEditPriority(index, e.target.value)}
+                    className="border px-2 py-1 rounded mb-1"
+                 >
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                 </select>
+
+                {/* category selection */}
+                <select
+                  value={t.cateory}
+                  onChange={(e) => onEditCategory(index, e.target.value)}
+                  className="border px-2 py-1 rounded mb-1"
+                >
+                <option value="">Select Category</option>
+                <option value="work">Work</option>
+                <option value="personal">Personal</option>
+                <option value="school">School</option>
+                </select>
+
+                {/* save button */}
+                <input>
+                </input>
                 <button onClick={() => onSave(index)} className="bg-yellow-400 text-black px-2 py-1 rounded hover:bg-yellow-500 transition">
                   Save
                 </button>
