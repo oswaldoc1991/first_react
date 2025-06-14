@@ -13,6 +13,9 @@ function App() {
   const [filter, setFilter] = useState('all');
   const [search, setSearch] = useState('');
 
+  // adding due dates 
+  const [dueDate, setDueDate] = useState('');
+
   // new state for category and priority
   const [category, setCategory] = useState('');
   const [priority, setPriority] = useState('medium');
@@ -42,12 +45,14 @@ function App() {
         completed: false,
         isEditing: false,
         priority, // adding priority
-        category // adding category
+        category, // adding category
+        dueDate // adding due dates
       }
     ]);
     setTask('');
     setPriority('medium'); // resetting priority
     setCategory(''); // reseting category
+    setDueDate('');
   };
 
   // deleting the task from the website
@@ -108,27 +113,34 @@ function App() {
             onKeyDown={(e) => e.key === 'Enter' && handleAddTask()}
           />
 
-           {/* drop down box for what type of task and priority */}
-      <select
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        className="border border-gray-300 rounded px-2 py-1 mr-2"
-      >
-        <option value="">Select Category</option>
-        <option value="Work">Work</option>
-        <option value="Personal">Personal</option>
-        <option value="School">School</option>
-      </select>
+          <input 
+            type="date"
+            value={dueDate}
+            onChange={(e) => setDueDate(e.target.value)}
+            className="border border-gray-300 rounded px-2 py-2"
+          />
 
-      <select
-        value={priority}
-        onChange={(e) => setPriority(e.target.value)}
-        className="border border-gray-300 rounded px-2 py-1 mr-2"
-      >
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
-      </select>
+           {/* drop down box for what type of task and priority */}
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="border border-gray-300 rounded px-2 py-1 mr-2"
+            >
+              <option value="">Select Category</option>
+              <option value="Work">Work</option>
+              <option value="Personal">Personal</option>
+              <option value="School">School</option>
+            </select>
+
+            <select
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
+              className="border border-gray-300 rounded px-2 py-1 mr-2"
+            >
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
 
           <button
             onClick={handleAddTask}
