@@ -5,6 +5,11 @@ import NavBar from './NavBar';
 import Footer from'./Footer';
 import Hero from './Hero';
 import TaskList from './TaskList';
+import { Routes, Route } from 'react-router-dom';
+import About from './About'
+import Login from './Login'
+import GetStarted from './GetStarted';
+import MyTasks from './MyTasks';
 
 function App() {
 
@@ -105,137 +110,140 @@ function App() {
 
   return (
     <div className="bg-white text-black min-h-screen">
+      <NavBar />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <main className='flex-grow max-w-2xl mx-auto px-4'>
+            {/* top page => the welcome page */}
+              <Hero />
+               <h1 className="text-4xl font-bold my-4">Hello Everyone</h1>
+               <p className="text-lg mb-4">Wlecome to Mytasks</p>
+               <Greeting name="Everyone" />
 
-      {/* NavBar for website */}
-      <NavBar /> 
+              <div className="my-4 flex flex-wrap gap-2 items-center">
+                <input 
+                type='text'
+                value={task}
+                onChange={(e) => setTask(e.target.value)}
+                placeholder='Enter Task'
+                className="border border-gray-300 rounded px-3 py-1 mr-2"
+                onKeyDown={(e) => e.key === 'Enter' && handleAddTask()}
+                />
+                <input 
+                  type="date"
+                  value={dueDate}
+                  onChange={(e) => setDueDate(e.target.value)}
+                  className="border border-gray-300 rounded px-2 py-2"
+                />
 
-      <main className='flex-grow max-w-3xl mx-auto px-4'>
-        {/* hero section for the website */}
-        <Hero />
+                {/* drop down box for what type of task and priority */}
+                  <select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    className="border border-gray-300 rounded px-2 py-1 mr-2"
+                  >
+                    <option value="">Select Category</option>
+                    <option value="Work">Work</option>
+                    <option value="Personal">Personal</option>
+                    <option value="School">School</option>
+                  </select>
 
-        {/* Title of the website */}
-        <h1 className="text-4xl font-bold my-4">Hello Everyone</h1>
-        <p className="text-lg mb-4">This is my first custom component</p>
-        <Greeting name="Everyone"/>
+                  <select
+                    value={priority}
+                    onChange={(e) => setPriority(e.target.value)}
+                    className="border border-gray-300 rounded px-2 py-1 mr-2"
+                  >
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                  </select>
+                <button
+                  onClick={handleAddTask}
+                  disabled={task.trim() === ''}
+                  className={`px-3 py-1 rounded transition ${task.trim() === '' ? 'bg-gray-300 text-gray-700 cursor-not-allowed' : 'bg-green-500 text-white hover:bg-green-600' }`}
+                >
+                Add Task
+                </button>
+              </div>
 
-        <div className="my-4 flex flex-wrap gap-2 items-center">
-          <input 
-            type='text'
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
-            placeholder='Enter Task'
-            className="border border-gray-300 rounded px-3 py-1 mr-2"
-            onKeyDown={(e) => e.key === 'Enter' && handleAddTask()}
-          />
+              {/* tally button */}
+              <p>
+                Total Tasks: {tasks.length} |
+                Completed Tasks: {tasks.filter(t => t.completed).length} |
+                Remaining : {tasks.filter(t => !t.completed).length}
+              </p>
 
-          <input 
-            type="date"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            className="border border-gray-300 rounded px-2 py-2"
-          />
+              {/* search bar */}
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search Tasks"
+                className="border border-gray-300 rounded px-3 py-1 mb-2 w-full"
+              />
 
-           {/* drop down box for what type of task and priority */}
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="border border-gray-300 rounded px-2 py-1 mr-2"
-            >
-              <option value="">Select Category</option>
-              <option value="Work">Work</option>
-              <option value="Personal">Personal</option>
-              <option value="School">School</option>
-            </select>
+              {/* filter */}
+              <div className="my-4 space-x-2">
+                <button
+                  onClick={() => setFilter('all')}
+                  className={`px-3 py-1 rounded ${
+                    filter === 'all' ? 'bg-blue-700' : 'bg-blue-500'
+                  } text-white hover:bg-blue-600`}
+                >
+                  All
+                </button>
 
-            <select
-              value={priority}
-              onChange={(e) => setPriority(e.target.value)}
-              className="border border-gray-300 rounded px-2 py-1 mr-2"
-            >
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-            </select>
+                <button
+                  onClick={() => setFilter('completed')}
+                  className={`px-3 py-1 rounded ${
+                    filter === 'completed' ? 'bg-green-700' : 'bg-green-500'
+                  } text-white hover:bg-green-600`}
+                >
+                  Completed
+                </button>
 
-          <button
-            onClick={handleAddTask}
-            disabled={task.trim() === ''}
-            className={`px-3 py-1 rounded transition ${task.trim() === '' ? 'bg-gray-300 text-gray-700 cursor-not-allowed' : 'bg-green-500 text-white hover:bg-green-600' }`}
-          >
-          Add Task
-          </button>
-      </div>
+                <button
+                  onClick={() => setFilter('incomplete')}
+                  className={`px-3 py-1 rounded ${
+                    filter === 'incomplete' ? 'bg-yellow-600' : 'bg-yellow-500'
+                  } text-white hover:bg-yellow-600`}
+                >
+                  Incomplete
+                </button>
+              </div>
 
-        {/* tally button */}
-        <p>
-          Total Tasks: {tasks.length} |
-          Completed Tasks: {tasks.filter(t => t.completed).length} |
-          Remaining : {tasks.filter(t => !t.completed).length}
-        </p>
+              {/* improved version of handling tasks */}
+              <TaskList 
+                tasks={filteredTasks}
+                onDelete={handleDeleteTask}
+                onToggleComplete={handleToggleComplete}
+                onStartEditing={handleStartEditing}
+                onEdit={handleEditTask}
+                onSave={handleSaveTask}
+                onEditPriority={handleEditPriority}
+                onEditCategory={handleEditCategory}
+                onEditDueDate={handleDueDate}
+              />
 
-        {/* search bar */}
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search Tasks"
-          className="border border-gray-300 rounded px-3 py-1 mb-2 w-full"
-        />
+              {tasks.length === 0 && (
+                <p className='text-gray-500 italic mt-4'>No Tasks yet. Add one above!</p>
+              )}
+            </main>
+          }
+        /> 
 
-        {/* filter */}
-        <div className="my-4 space-x-2">
-          <button
-            onClick={() => setFilter('all')}
-            className={`px-3 py-1 rounded ${
-              filter === 'all' ? 'bg-blue-700' : 'bg-blue-500'
-            } text-white hover:bg-blue-600`}
-          >
-            All
-          </button>
-
-          <button
-            onClick={() => setFilter('completed')}
-            className={`px-3 py-1 rounded ${
-              filter === 'completed' ? 'bg-green-700' : 'bg-green-500'
-            } text-white hover:bg-green-600`}
-          >
-            Completed
-          </button>
-
-          <button
-            onClick={() => setFilter('incomplete')}
-            className={`px-3 py-1 rounded ${
-              filter === 'incomplete' ? 'bg-yellow-600' : 'bg-yellow-500'
-            } text-white hover:bg-yellow-600`}
-          >
-            Incomplete
-          </button>
-        </div>
-
-        {/* improved version of handling tasks */}
-        <TaskList 
-          tasks={filteredTasks}
-          onDelete={handleDeleteTask}
-          onToggleComplete={handleToggleComplete}
-          onStartEditing={handleStartEditing}
-          onEdit={handleEditTask}
-          onSave={handleSaveTask}
-          onEditPriority={handleEditPriority}
-          onEditCategory={handleEditCategory}
-          onEditDueDate={handleDueDate}
-        />
-
-        {tasks.length === 0 && (
-          <p className='text-gray-500 italic mt-4'>No Tasks yet. Add one above!</p>
-        )}
-      </main>
-
-      {/* Footer for the website */}
-      <div className='mt-12'>
-        <Footer />
-      </div>
+        {/* routes from other pages */}
+        <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/get-started" element={<GetStarted />} />
+        <Route path="/mytasks" element={<MyTasks />} />
+      </Routes>
+      <Footer />
     </div>
-  );      
+  );
+      
 };
 
 export default App;
