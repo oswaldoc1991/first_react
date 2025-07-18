@@ -6,12 +6,6 @@ function Hero() {
         <p className="text-gray-700 mb-6">
           MyTask helps you track everything — from daily to-dos to long-term goals.
         </p>
-        <a
-          href="#tasks-input"
-          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
-        >
-          Get Started
-        </a>
       </div>
     </section>
   );
