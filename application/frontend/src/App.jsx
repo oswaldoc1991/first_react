@@ -17,18 +17,13 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [filter, setFilter] = useState('all');
   const [search, setSearch] = useState('');
-
-  // adding due dates 
-  const [dueDate, setDueDate] = useState('');
-
-  // new state for category and priority
-  const [category, setCategory] = useState('');
+  const [dueDate, setDueDate] = useState(''); // adding due dates
+  const [category, setCategory] = useState(''); // new state for category and priority
   const [priority, setPriority] = useState('medium');
 
   // loading the task from the local storage when the app stores
   useEffect(() => {
     const storedTasks = localStorage.getItem('tasks');
-    // console.log("loaded from local storage:", storedTasks);
     if (storedTasks) {
       setTasks(JSON.parse(storedTasks));
     }
@@ -36,7 +31,6 @@ function App() {
 
   // saving task to te local storage after tasks are changed
   useEffect(() => {
-    console.log("Saving to local storage:", tasks);
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
@@ -109,67 +103,73 @@ function App() {
         });
 
   return (
-    <div className="bg-white text-black min-h-screen">
+    <div className="bg-gray-100 text-gray-900 min-h-screen">
       <NavBar />
       <Routes>
         <Route
           path="/"
           element={
-            <main className='flex-grow max-w-2xl mx-auto px-4'>
+            <main className='flex-grow max-w-3xl mx-auto px-6'>
             {/* top page => the welcome page */}
               <Hero />
-               <h1 className="text-4xl font-bold my-4">Hello Everyone</h1>
-               <p className="text-lg mb-4">Wlecome to Mytasks</p>
+               <h1 className="text-4xl font-bold mb-2">Hello Everyone</h1>
+               <p className="text-lg mb-4">Welcome to Mytasks</p> 
                <Greeting name="Everyone" />
 
-              <div className="my-4 flex flex-wrap gap-2 items-center">
-                <input 
-                type='text'
-                value={task}
-                onChange={(e) => setTask(e.target.value)}
-                placeholder='Enter Task'
-                className="border border-gray-300 rounded px-3 py-1 mr-2"
-                onKeyDown={(e) => e.key === 'Enter' && handleAddTask()}
-                />
-                <input 
-                  type="date"
-                  value={dueDate}
-                  onChange={(e) => setDueDate(e.target.value)}
-                  className="border border-gray-300 rounded px-2 py-2"
-                />
+              <div className="bg-white p-4 rounded-lg shadow-md my-6"> 
+                <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4 items-center">
+                  <input 
+                    type='text'
+                    value={task}
+                    onChange={(e) => setTask(e.target.value)}
+                    placeholder='Enter Task'
+                    className="border border-gray-300 rounded px-3 py-2 w-full sm:w-auto flex-1"
+                    onKeyDown={(e) => e.key === 'Enter' && handleAddTask()}
+                  />
+                  <input 
+                      type="date"
+                      value={dueDate}
+                      onChange={(e) => setDueDate(e.target.value)}
+                      className="border border-gray-300 rounded px-2 py-2"
+                  />
 
-                {/* drop down box for what type of task and priority */}
-                  <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    className="border border-gray-300 rounded px-2 py-1 mr-2"
-                  >
-                    <option value="">Select Category</option>
-                    <option value="Work">Work</option>
-                    <option value="Personal">Personal</option>
-                    <option value="School">School</option>
-                  </select>
+                    {/* drop down box for what type of task and priority */}
+                      <select
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                        className="border border-gray-300 rounded px-2 py-2"
+                      >
+                        <option value="">Select Category</option>
+                        <option value="Work">Work</option>
+                        <option value="Personal">Personal</option>
+                        <option value="School">School</option>
+                      </select>
 
-                  <select
-                    value={priority}
-                    onChange={(e) => setPriority(e.target.value)}
-                    className="border border-gray-300 rounded px-2 py-1 mr-2"
-                  >
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
+                      <select
+                        value={priority}
+                        onChange={(e) => setPriority(e.target.value)}
+                        className="border border-gray-300 rounded px-3 py-2"
+                      >
+                        <option value="low">Low 🟢</option>
+                        <option value="medium">Medium 🟡</option>
+                        <option value="high">High 🔴</option>
                   </select>
-                <button
-                  onClick={handleAddTask}
-                  disabled={task.trim() === ''}
-                  className={`px-3 py-1 rounded transition ${task.trim() === '' ? 'bg-gray-300 text-gray-700 cursor-not-allowed' : 'bg-green-500 text-white hover:bg-green-600' }`}
-                >
-                Add Task
-                </button>
+                  <button
+                    onClick={handleAddTask}
+                    disabled={task.trim() === ''}
+                    className={`px-4 py-2 rounded font-semibold transition ${
+                      task.trim() === ''
+                        ? 'bg-gray-300 text-gray-700 cursor-not-allowed'
+                        : 'bg-green-500 text-white hover:bg-green-600'
+                    }`}
+                  >
+                    Task
+                  </button>
+                </div>
               </div>
 
               {/* tally button */}
-              <p>
+              <p className='mb-4'>
                 Total Tasks: {tasks.length} |
                 Completed Tasks: {tasks.filter(t => t.completed).length} |
                 Remaining : {tasks.filter(t => !t.completed).length}
@@ -184,35 +184,21 @@ function App() {
                 className="border border-gray-300 rounded px-3 py-1 mb-2 w-full"
               />
 
-              {/* filter */}
-              <div className="my-4 space-x-2">
-                <button
-                  onClick={() => setFilter('all')}
-                  className={`px-3 py-1 rounded ${
-                    filter === 'all' ? 'bg-blue-700' : 'bg-blue-500'
-                  } text-white hover:bg-blue-600`}
-                >
-                  All
-                </button>
+              {/* buttons for all, complete, and incomplete */}
+              <div className="mb-6 space-x-2">
+                <button onClick={() => setFilter('all')} className={`px-3 py-1 rounded ${
+                  filter === 'all' ? 'bg-blue-700' : 'bg-blue-500'
+                } text-white hover:bg-blue-600`}>All</button>
 
-                <button
-                  onClick={() => setFilter('completed')}
-                  className={`px-3 py-1 rounded ${
-                    filter === 'completed' ? 'bg-green-700' : 'bg-green-500'
-                  } text-white hover:bg-green-600`}
-                >
-                  Completed
-                </button>
+                <button onClick={() => setFilter('completed')} className={`px-3 py-1 rounded ${
+                  filter === 'completed' ? 'bg-green-700' : 'bg-green-500'
+                } text-white hover:bg-green-600`}>Completed</button>
 
-                <button
-                  onClick={() => setFilter('incomplete')}
-                  className={`px-3 py-1 rounded ${
-                    filter === 'incomplete' ? 'bg-yellow-600' : 'bg-yellow-500'
-                  } text-white hover:bg-yellow-600`}
-                >
-                  Incomplete
-                </button>
+                <button onClick={() => setFilter('incomplete')} className={`px-3 py-1 rounded ${
+                  filter === 'incomplete' ? 'bg-yellow-600' : 'bg-yellow-500'
+                } text-white hover:bg-yellow-600`}>Incomplete</button>
               </div>
+
 
               {/* improved version of handling tasks */}
               <TaskList 
@@ -243,7 +229,6 @@ function App() {
       <Footer />
     </div>
   );
-      
 };
 
 export default App;

@@ -11,20 +11,12 @@ export default function NavBar() {
             </Link>
 
             <button className="sm:hidden text-white focus:outline-non" onClick={() => setIsOpen(!isOpen)}>
-              ☰  
+              ☰ 
             </button>
-
-
              <div className={`sm:flex gap-4 ${isOpen ? "block m" : "hidden sm:block"}`}>
-                <Link to="/about" className="hover:text-gray-200 block sm:inline">
-                    About
-                </Link>
-                <Link to="/login" className="hover:text-gray-200 block sm:inline">
-                    Login
-                </Link>
-                <Link to="/get-started" className="hover:text-gray-200 block sm:inline">
-                    Get Started
-                </Link>
+                <Link to="/about" className="hover:text-gray-200 block sm:inline">About</Link>
+                <Link to="/login" className="hover:text-gray-200 block sm:inline">Login</Link>
+                <Link to="/get-started" className="hover:text-gray-200 block sm:inline">Get Started</Link>
              </div>
         </div>
      </nav>
