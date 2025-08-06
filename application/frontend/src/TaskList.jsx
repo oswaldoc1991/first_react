@@ -2,7 +2,7 @@ function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, o
   return (
     <ul className="space-y-2 mt-4">
       {tasks.map((t, index) => (
-        <li key={index} className={`flex justify-between items-center p-2 border-b border-gray-300 ${ t.completed ? `line-through text-gray-400` : ``}`}>
+        <li key={index} className={`bg-white rounded shadow =-4 border border-gray-200 flex flex ${ t.completed ? `line-through text-gray-400` : ``}`}>
           <div className="flex flex-col sm:flex-row sm:items-center sm:gap-3">
             {t.isEditing ? (
               <>
@@ -46,8 +46,6 @@ function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, o
                 </select>
 
                 {/* save button */}
-                <input>
-                </input>
                 <button onClick={() => onSave(index)} className="bg-yellow-400 text-black px-2 py-1 rounded hover:bg-yellow-500 transition">
                   Save
                 </button>
