@@ -2,8 +2,8 @@ function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, o
   return (
     <ul className="space-y-2 mt-4">
       {tasks.map((t, index) => (
-        <li key={index} className={`bg-white rounded shadow =-4 border border-gray-200 flex flex ${ t.completed ? `line-through text-gray-400` : ``}`}>
-          <div className="flex flex-col sm:flex-row sm:items-center sm:gap-3">
+        <li key={index} className={`bg-white rounded shadow-md border border-gray-200 flex flex-col sm:flex-row sm:justify-between sm:items-center p-3 ${ t.completed ? `line-through text-gray-400` : ``}`}>
+          <div className="flex flex-wrap items-center gap-3">
             {t.isEditing ? (
               <>
               {/* task text */}
@@ -35,7 +35,7 @@ function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, o
 
                 {/* category selection */}
                 <select
-                  value={t.cateory}
+                  value={t.category}
                   onChange={(e) => onEditCategory(index, e.target.value)}
                   className="border px-2 py-1 rounded mb-1"
                 >
@@ -52,12 +52,30 @@ function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, o
               </>
             ) : (
               <>
+            {/* task text */}
                 <span className="font-medium">{t.text}</span>
-                <div className="flex item-center gap-2 mt-1 sm:mt-0">
-                  <span className="text.sm italic text-gray-500">
-                    [{t.cateory || 'uncategorized'}]
+
+                <div className="flex items-center flex-wrap gap-x-4 gap-y-1 mt-1 sm:mt-0">
+                {/* category */}
+                  <span className="text-sm italic text-gray-500">
+                    {' '}[{t.category || 'uncategorized'}]
                   </span>
-                  <span className="text-sm text-gray-700 capitalize">{t.prioritize}</span>
+
+                  {/* priority */}
+                <span className="flex items-center gap-1 text-sm text-gray-700 capitalize">
+                  {t.priority}
+                  <span
+                    className={`w-2 h-2 rounded-full ${
+                      t.priority === "high"
+                      ? "bg-red-500"
+                      : t.priority === "medium"
+                      ? "bg-yellow-400"
+                      : "bg-green-500"
+                    }`}
+                  ></span>
+                </span>
+
+                  {/* due date */}
                   {t.dueDate && (
                     <span className="text-sm text-gray-600">
                       Due: {new Date(t.dueDate).toLocaleDateString()}
@@ -69,26 +87,23 @@ function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, o
           </div>
 
           {!t.isEditing && (
-            <div className="flex gap-2 mt-2 sm:mt-0">
-              <button onClick={() => onDelete(index)} className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition">
+            <div className="flex flex-wrap gap-2 justify-end mt-3 sm:mt-0">
+              <button onClick={() => onDelete(index)} 
+                className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
+              >
                 Delete
               </button>
-              <button onClick={() => onToggleComplete(index)} className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition">
+              <button onClick={() => onToggleComplete(index)}
+                className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition"
+              >
                 {t.completed ? 'Undo' : 'Done'}
               </button>
               <button
                 onClick={() => onStartEditing(index)}
-                className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition"
+                className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition"
               >
                 Edit
               </button>
-
-              {/* due date section under this comment here*/}
-              {t.dueDate && (
-                <span className="text-sm text-gray-600">
-                Due: {new Date(t.dueDate).toLocaleDateString()}
-                </span>
-              )}
             </div>
           )}
         </li>
