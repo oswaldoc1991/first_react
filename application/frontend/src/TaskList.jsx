@@ -28,9 +28,9 @@ function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, o
                     onChange={(e) => onEditPriority(index, e.target.value)}
                     className="border px-2 py-1 rounded mb-1"
                  >
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
+                  <option value="low"> Low </option>
+                  <option value="medium"> Medium </option>
+                  <option value="high"> High </option>
                  </select>
 
                 {/* category selection */}
@@ -40,9 +40,9 @@ function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, o
                   className="border px-2 py-1 rounded mb-1"
                 >
                 <option value="">Select Category</option>
-                <option value="work">Work</option>
-                <option value="personal">Personal</option>
-                <option value="school">School</option>
+                <option value="work"> Work </option>
+                <option value="personal"> Personal </option>
+                <option value="school"> School </option>
                 </select>
 
                 {/* save button */}
@@ -52,13 +52,14 @@ function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, o
               </>
             ) : (
               <>
-            {/* task text */}
-                <span className="font-medium">{t.text}</span>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1 sm:mt-0">
+                
+                {/* task text */}
+                <span className="font-medium text-lg">{t.text}</span>
 
-                <div className="flex items-center flex-wrap gap-x-4 gap-y-1 mt-1 sm:mt-0">
                 {/* category */}
                   <span className="text-sm italic text-gray-500">
-                    {' '}[{t.category || 'uncategorized'}]
+                    [{t.category || 'uncategorized'}]
                   </span>
 
                   {/* priority */}
@@ -88,12 +89,14 @@ function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, o
 
           {!t.isEditing && (
             <div className="flex flex-wrap gap-2 justify-end mt-3 sm:mt-0">
-              <button onClick={() => onDelete(index)} 
+              <button 
+                onClick={() => onDelete(index)} 
                 className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
               >
                 Delete
               </button>
-              <button onClick={() => onToggleComplete(index)}
+              <button
+                onClick={() => onToggleComplete(index)}
                 className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition"
               >
                 {t.completed ? 'Undo' : 'Done'}
