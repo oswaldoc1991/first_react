@@ -18,7 +18,7 @@ function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, o
               className="border px-2 py-1 rounded mb-2 w-full"
             />
             <input 
-              type="data"
+              type="date"
               value={t.onEditDueDate || ""}
               onChange={(e) => onEditDueDate(index, e.target.value)}
               className="border px-2 py-1 rounded mb-2 w-full"            
@@ -54,7 +54,7 @@ function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, o
             </>
           ) : (
             <>
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:item-center">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
               {/* task information */}
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-3 sm:mb-0">
                 {/* task text */}
@@ -101,7 +101,7 @@ function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, o
                 {/* second button */}
                 <button
                   onClick={() => onToggleComplete(index)}
-                  className="bg-green-500 text-white px-3 py-1 rounded hover: bg-green-600 trasnition"
+                  className="bg-green-500 text-white px-3 py-1 rounded hover: bg-green-600 transition"
                 >
                   {t.completed ? "Undo" : "Done"}
                 </button>
