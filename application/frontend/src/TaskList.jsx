@@ -1,4 +1,4 @@
-function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, onSave, onEditPriority, onEditCategory, onEditDueDate}) {
+function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, onSave, onEditPriority, onEditCategory, onEditDueDate, onAddSubtask, onToggleSubtask, onEditNotes, onSetRecurring}) {
   return (
     <ul className="space-y-4 mt-4">
       {tasks.map((t, index) => (
@@ -19,7 +19,7 @@ function TaskList({ tasks, onDelete, onToggleComplete, onStartEditing, onEdit, o
             />
             <input 
               type="date"
-              value={t.onEditDueDate || ""}
+              value={t.onDueDate || ""}
               onChange={(e) => onEditDueDate(index, e.target.value)}
               className="border px-2 py-1 rounded mb-2 w-full"            
             />

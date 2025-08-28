@@ -13,6 +13,7 @@ import MyTasks from './MyTasks';
 
 function App() {
 
+  // States of the current website 
   const [task, setTask] = useState('');
   const [tasks, setTasks] = useState([]);
   const [filter, setFilter] = useState('all');
@@ -20,6 +21,12 @@ function App() {
   const [dueDate, setDueDate] = useState(''); // adding due dates
   const [category, setCategory] = useState(''); // new state for category and priority
   const [priority, setPriority] = useState('medium');
+
+  const totalTasks = tasks.length;
+  const completedTasks = tasks.filter(t => t.completed).length;
+  const progress = totalTasks === 0 ? 0: (completedTasks / totalTasks) * 100;
+
+  // local storage
 
   // loading the task from the local storage when the app stores
   useEffect(() => {
@@ -34,6 +41,7 @@ function App() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
+  // main handlers for the website 
   // adding priority and category into the website
   const handleAddTask = () => {
     if (task.trim() === '') return;
@@ -45,13 +53,16 @@ function App() {
         isEditing: false,
         priority, // adding priority
         category, // adding category
-        dueDate // adding due dates
-      }
+        dueDate, // adding due dates
+        subtasks: [],
+        notes: "",
+        recurring: "",
+      },
     ]);
     setTask('');
     setPriority('medium'); // resetting priority
     setCategory(''); // reseting category
-    setDueDate('');
+    setDueDate(''); // this is also reseting the due dates
   };
 
   // deleting the task from the website
@@ -92,6 +103,45 @@ function App() {
     setTasks(tasks.map((t, i) => i === index ? { ...t, dueDate: newDueDate} : t));
   }; 
 
+  // handling subtasks
+  const handleAddSubtask = (taskIndex, text) => {
+    setTask(tasks.map((t, i) => 
+      i === taskIndex
+      ? { ...t, subTasks: [...(subTasks || []), { text, done: false }] } : t
+    ));
+  }
+  
+  // subtask completion
+   const handleToggleSubtask = (taskIndex, subIndex) => {
+    setTasks(
+      tasks.map((t, i) =>
+        i === taskIndex
+          ? {
+              ...t,
+              subtasks: t.subtasks.map((st, j) =>
+                j === subIndex ? { ...st, done: !st.done } : st
+              ),
+            }
+          : t
+      )
+    );
+  };
+
+  // notes
+  const handleEditNotes = (index, newNotes) => {
+    setTasks(tasks.map((t, i) => (i === index ? { ...t, notes: newNotes } : t)));
+  };
+
+  // recurring 
+  const handleSetRecurring = (index, recurringtype) => {
+    setTasks(
+      tasks.map((t, i) =>
+      i === index ? { ...t, recurring: recurringtype} : t
+      )
+    );
+  };
+
+  // filtering
   const filteredTasks = tasks.filter((task) => {
           const matchesFilter =
             filter === 'completed' ? task.completed :
@@ -102,6 +152,7 @@ function App() {
           return matchesFilter && matchesSearch;
         });
 
+  // the UI
   return (
     <div className="bg-gray-100 text-gray-900 min-h-screen">
       <NavBar />
@@ -201,6 +252,16 @@ function App() {
 
 
               {/* improved version of handling tasks */}
+              <div className="mt-6">
+                <p className="text-sm text-gray-600 mb-1">
+                  progress: {completedTasks}/{totalTasks} tasks completed
+                </p>
+                <div className="w-full bg-gray-200 rounded-full h-3">
+                  <div className="bg-green-500 h-3 rounded-full" style={{ width: `${progress}%` }}></div>
+                </div>
+              </div>
+
+              {/* current progress bar for the task manager */}
               <TaskList 
                 tasks={filteredTasks}
                 onDelete={handleDeleteTask}
@@ -211,6 +272,10 @@ function App() {
                 onEditPriority={handleEditPriority}
                 onEditCategory={handleEditCategory}
                 onEditDueDate={handleDueDate}
+                onAddSubtask={handleAddSubtask}   
+                onToggleSubtask={handleToggleSubtask} 
+                onEditNotes={handleEditNotes}     
+                onSetRecurring={handleSetRecurring} 
               />
 
               {tasks.length === 0 && (
