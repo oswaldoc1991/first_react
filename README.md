@@ -6,4 +6,6 @@ To run the project the command are as followed
 npm run build
 npm run preview
 
-any edit to this while using npm run dev will have to repeat the process starting with line 6 then line 7
+for development it would be npm run dev
+
+worked on by Oswaldo Cabrera
