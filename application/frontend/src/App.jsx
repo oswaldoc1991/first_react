@@ -105,20 +105,24 @@ function App() {
 
   // handling subtasks
   const handleAddSubtask = (taskIndex, text) => {
-    setTask(tasks.map((t, i) => 
-      i === taskIndex
-      ? { ...t, subTasks: [...(subTasks || []), { text, done: false }] } : t
-    ));
-  }
+    if (!text || text.trim() === "") return;
+      setTasks((prev) =>
+        setTasks((prev) =>
+          i === taskIndex
+            ? { ...t, subtasks: [ ...About(t.subtasks || []), { text: text.trim(), done: false }] }
+            : t
+          )
+      );  
+  };
   
   // subtask completion
    const handleToggleSubtask = (taskIndex, subIndex) => {
-    setTasks(
+    setTasks((prev) =>
       tasks.map((t, i) =>
         i === taskIndex
           ? {
               ...t,
-              subtasks: t.subtasks.map((st, j) =>
+              subtasks: (t.subtasks || []).map((st, j) =>
                 j === subIndex ? { ...st, done: !st.done } : st
               ),
             }
