@@ -176,7 +176,7 @@ function TaskList({
               </div>
             </div>
 
-            {/* notes goes here */}
+            {/* notes  */}
             <div className="mt-3">
               <h4 className="font-semibold text-sm">Notes: </h4>
               <textarea
@@ -187,7 +187,7 @@ function TaskList({
               />
             </div>
 
-            {/* recurring goes here must continue */}
+            {/* recurring  */}
             <div className="mt-3">
               <h4 className="font-semibold text-sm">Recurring: </h4>
               <select
