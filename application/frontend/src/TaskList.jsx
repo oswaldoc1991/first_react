@@ -112,21 +112,21 @@ function TaskList({
                 {/* first button */}
                 <button
                   onClick={() => onDelete(index)}
-                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition" 
+                  className="bg-brand text-white px-3 py-1 rounded hover:brightness-90 transition" 
                 >
                   Delete
                 </button>
                 {/* second button */}
                 <button
                   onClick={() => onToggleComplete(index)}
-                  className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition"
+                  className="bg-brand text-white px-3 py-1 rounded hover:brigthness-90 transition"
                 >
                   {t.completed ? "Undo" : "Done"}
                 </button>
                 {/* third button */}
                 <button
                   onClick={() => onStartEditing(index)}
-                  className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition"
+                  className="bg-brand text-white px-3 py-1 rounded hover:brightness-90 transition"
                 >
                   Edit
                 </button>

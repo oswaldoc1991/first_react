@@ -1,11 +1,15 @@
+// tailwind.config.js
 export default {
-  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        brand: "#1e40af", // pick your one distinct color
+      },
+    },
   },
   plugins: [],
-}
+};

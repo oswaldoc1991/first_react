@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function NavBar() {
     const [isOpen, setIsOpen] = useState(false)
     return (
-    <nav className="bg-blue-600 text-white p-4 shadow -md">
+    <nav className="bg-blue-600 text-white p-4 shadow-md">
         <div className="max-w-7xl mx-auto flex justify-between items-center">   
             <Link to="/mytasks" className="text-xl font-bold hover:text-gray-300">
                 MyTasks

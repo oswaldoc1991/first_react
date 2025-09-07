@@ -213,10 +213,9 @@ function App() {
                     onClick={handleAddTask}
                     disabled={task.trim() === ''}
                     className={`px-4 py-2 rounded font-semibold transition ${
-                      task.trim() === ''
-                        ? 'bg-gray-300 text-gray-700 cursor-not-allowed'
-                        : 'bg-green-500 text-white hover:bg-green-600'
-                    }`}
+                    task.trim() === '' ? 'bg-gray-300 text-gray-700 cursor-not-allowed'
+                    : 'bg-brand text-white hover:brightness/80'
+                  }`}
                   >
                     Task
                   </button>
@@ -242,15 +241,15 @@ function App() {
               {/* buttons for all, complete, and incomplete */}
               <div className="mb-6 space-x-2">
                 <button onClick={() => setFilter('all')} className={`px-3 py-1 rounded ${
-                  filter === 'all' ? 'bg-blue-700' : 'bg-blue-500'
+                  filter === 'all' ? 'bg-brand' : 'bg-gray-300 text-gray-800'
                 } text-white hover:bg-blue-600`}>All</button>
 
                 <button onClick={() => setFilter('completed')} className={`px-3 py-1 rounded ${
-                  filter === 'completed' ? 'bg-green-700' : 'bg-green-500'
+                  filter === 'all' ? 'bg-brand' : 'bg-gray-300 text-gray-800'
                 } text-white hover:bg-green-600`}>Completed</button>
 
                 <button onClick={() => setFilter('incomplete')} className={`px-3 py-1 rounded ${
-                  filter === 'incomplete' ? 'bg-yellow-600' : 'bg-yellow-500'
+                  filter === 'all' ? 'bg-brand' : 'bg-gray-300 text-gray-800'
                 } text-white hover:bg-yellow-600`}>Incomplete</button>
               </div>
 
@@ -261,7 +260,7 @@ function App() {
                   progress: {completedTasks}/{totalTasks} tasks completed
                 </p>
                 <div className="w-full bg-gray-200 rounded-full h-3">
-                  <div className="bg-green-500 h-3 rounded-full" style={{ width: `${progress}%` }}></div>
+                  <div className="bg-brand h-3 rounded-full" style={{ width: `${progress}%` }}></div>
                 </div>
               </div>
 
