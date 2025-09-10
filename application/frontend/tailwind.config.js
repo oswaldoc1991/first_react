@@ -1,15 +1,11 @@
-// tailwind.config.js
+// postcss.config.js
+
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
+
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+  plugins: [
+    tailwindcss(),
+    autoprefixer(),
   ],
-  theme: {
-    extend: {
-      colors: {
-        brand: "#1e40af", // pick your one distinct color
-      },
-    },
-  },
-  plugins: [],
 };

@@ -1,7 +1,15 @@
-// postcss.config.js
+// tailwind.config.js
 export default {
-  plugins: {
-    '@tailwindcss/postcss': {},
-    autoprefixer: {},
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        brand: "#1e40af", 
+      },
+    },
   },
-}
+  plugins: [],
+};
