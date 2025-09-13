@@ -1,15 +1,13 @@
-// tailwind.config.js
+// postcss.config.js
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
+import postcssNesting from 'postcss-nesting';
+
+/** @type {import('postcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+  plugins: [
+    postcssNesting, // Must come before tailwindcss
+    tailwindcss,
+    autoprefixer,
   ],
-  theme: {
-    extend: {
-      colors: {
-        brand: "#1e40af", 
-      },
-    },
-  },
-  plugins: [],
 };
