@@ -5,11 +5,13 @@ import NavBar from './NavBar';
 import Footer from'./Footer';
 import Hero from './Hero';
 import TaskList from './TaskList';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import About from './About'
 import Login from './Login'
 import GetStarted from './GetStarted';
 import MyTasks from './MyTasks';
+import Dashboard from './Dashboard'
+import ProtectedRoute from './ProtectedRoute';
 
 function App() {
 
@@ -106,13 +108,17 @@ function App() {
   // handling subtasks
   const handleAddSubtask = (taskIndex, text) => {
     if (!text || text.trim() === "") return;
-      setTasks((prev) =>
-        setTasks((prev) =>
-          i === taskIndex
-            ? { ...t, subtasks: [ ...About(t.subtasks || []), { text: text.trim(), done: false }] }
-            : t
-          )
-      );  
+
+    setTasks((prev) =>
+      prev.map((t, i) =>
+        i === taskIndex
+          ? {
+            ...t,
+            subtasks: [...(t.subtasks || []), { text: text.trim(), done: false}]
+          }
+          : t
+      )
+    );
   };
   
   // subtask completion
@@ -289,10 +295,20 @@ function App() {
         /> 
 
         {/* routes from other pages */}
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/get-started" element={<GetStarted />} />
         <Route path="/mytasks" element={<MyTasks />} />
+
+        <Route 
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
       <Footer />
     </div>
