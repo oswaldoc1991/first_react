@@ -12,6 +12,7 @@ import GetStarted from './GetStarted';
 import MyTasks from './MyTasks';
 import Dashboard from './Dashboard'
 import ProtectedRoute from './ProtectedRoute';
+import Register from './Register';
 
 function App() {
 
@@ -300,6 +301,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/get-started" element={<GetStarted />} />
         <Route path="/mytasks" element={<MyTasks />} />
+        <Route path="/register" element={<Register />} /> 
 
         <Route 
           path="/dashboard"

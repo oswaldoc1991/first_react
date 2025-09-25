@@ -14,6 +14,10 @@ export default function NavBar() {
                     My Tasks
                 </Link>
 
+                <Link to="/register" Classname="hover:text-gray-200 block sm:inline">
+                    Register
+                </Link>
+
                 {/* the toggle for the website */}
                 <button className="sm:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
                     ☰
