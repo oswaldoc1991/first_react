@@ -1,16 +1,16 @@
-import { useEffect, useStates } from "react";
+import { useEffect, useState } from "react";
 import Greeting from './Greeting';
 import Hero from './Hero';
 import TaskList from './TaskList';
 
 export default function Home() {
     const [task, setTask] = useState('');
-    const [tasks, setTasks] = useStates('');
-    const [filter, setFilter] = useStates('all');
-    const [search, setSearch] = useStates('');
-    const [dueDate, setDueDate] = useStates('');
-    const [category, setcategory] = useStates('');
-    const [priority, setPriority] = useStates('medium');
+    const [tasks, setTasks] = useState([]);
+    const [filter, setFilter] = useState('all');
+    const [search, setSearch] = useState('');
+    const [dueDate, setDueDate] = useState('');
+    const [category, setcategory] = useState('');
+    const [priority, setPriority] = useState('medium');
 
     const totalTasks = tasks.length;
     const completedTasks = tasks.filter(t => t.completed).length;
@@ -24,24 +24,24 @@ export default function Home() {
     }, []);
     
     useEffect(() => {
-        localStorage.sentItem('tasks', JSON.stringify(tasks));
+        localStorage.setItem('tasks', JSON.stringify(tasks));
     }, [tasks]);
 
     const handleAddtasks = () => {
-        if (tasks.trim() === '') return;
-        setTask([
-            ...tasks,
-            {
-                text: task,
-                completed: false,
-                isEditing: false,
-                priority,
-                category,
-                dueDate,
-                subtasks: [],
-                notes: '',
-                recurring: '',
-            },
+       if (task.trim() === '') return;
+        setTasks([
+          ...tasks,
+          {
+            text: task,
+            completed: false,
+            isEditing: false,
+            priority,
+            category,
+            dueDate,
+            subtasks: [],
+            notes: '',
+            recurring: '',
+          },
         ]);
         setTask('');
         setPriority('medium');

@@ -1,6 +1,5 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom'
-import Home from './components/Home';
 import NavBar from './NavBar';
 import About from './About';
 import Login from './Login';
@@ -8,9 +7,10 @@ import GetStarted from './GetStarted';
 import MyTasks from './MyTasks';
 import ProtectedRoute from './ProtectedRoute';
 import Register from './Register';
-import Home from './Home'
+import Dashboard from './Dashboard';
+import Home from './Home';
 
-function app() {
+function App() {
   return (
     <div className="bg-gray-100 text-gray-900 min-h-screen flex flex-col">
       <NavBar />
@@ -37,3 +37,5 @@ function app() {
     </div>
   );
 }
+
+export default App;
