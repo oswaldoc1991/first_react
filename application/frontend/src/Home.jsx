@@ -27,7 +27,7 @@ export default function Home() {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }, [tasks]);
 
-    const handleAddtasks = () => {
+    const handleAddtask = () => {
        if (task.trim() === '') return;
         setTasks([
           ...tasks,
@@ -45,12 +45,12 @@ export default function Home() {
         ]);
         setTask('');
         setPriority('medium');
-        setcategory('');
+        setCategory('');
         setDueDate('');
     };
 
-    const handleDeleteTasks = (index) =>
-        setTask(tasks.filter((_, i) => i !== index));
+    const handleDeleteTask = (index) =>
+        setTasks(tasks.filter((_, i) => i !== index));
 
     const handleToggleComplete = (index) =>
     setTasks(
@@ -62,14 +62,14 @@ export default function Home() {
         tasks.map((t, i) => (i === index ? { ...t, isEditing: false } : t))
     );
 
-    const handleSaveTasks = (index) =>
+    const handleSaveTask = (index) =>
     setTasks(
         tasks.map((t, i) => (i === index ? { ...t, isEditing: false } : t))
     );
     
     const handleEditPriority = (index, newPriority) =>
         setTasks(
-        tasks.map((t, i) => (i ==- index ? { ...t, priority: newPriority } : t))
+        tasks.map((t, i) => (i === index ? { ...t, priority: newPriority } : t))
     );
 
     const handleEditCategory = (index, newCategory) =>
@@ -104,7 +104,7 @@ export default function Home() {
     const handleSetRecurring = (index, recurringType) =>
         setTasks(
             tasks.map ((t, i) =>
-            i == index ? { ...t, recurring: recurringType} : t
+            i === index ? { ...t, recurring: recurringType} : t
         )
     );
 
