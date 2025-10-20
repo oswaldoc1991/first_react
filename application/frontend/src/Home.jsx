@@ -9,7 +9,7 @@ export default function Home() {
     const [filter, setFilter] = useState('all');
     const [search, setSearch] = useState('');
     const [dueDate, setDueDate] = useState('');
-    const [category, setcategory] = useState('');
+    const [category, setCategory] = useState('');
     const [priority, setPriority] = useState('medium');
 
     const totalTasks = tasks.length;
@@ -27,7 +27,7 @@ export default function Home() {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }, [tasks]);
 
-    const handleAddtask = () => {
+    const handleAddTask = () => {
        if (task.trim() === '') return;
         setTasks([
           ...tasks,
@@ -56,11 +56,17 @@ export default function Home() {
     setTasks(
         tasks.map((t, i) => (i === index ? { ...t, completed: !t.completed } :t))
     );
+
+    const handleStartEditing = (index) =>
+  setTasks(tasks.map((t, i) =>
+    i === index ? { ...t, isEditing: true } : t
+  ));
     
-    const handleEditTask = (index, newText) =>
-    setTasks(
-        tasks.map((t, i) => (i === index ? { ...t, isEditing: false } : t))
-    );
+    
+   const handleEditTask = (index, newText) =>
+  setTasks(tasks.map((t, i) =>
+    i === index ? { ...t, text: newText, isEditing: false } : t
+  ));
 
     const handleSaveTask = (index) =>
     setTasks(
@@ -77,10 +83,10 @@ export default function Home() {
       tasks.map((t, i) => (i === index ? { ...t, category: newCategory } : t))
     );
 
-  const handleDueDate = (index, newDueDate) =>
-    setTasks(
-      tasks.map((t, i) => (i === index ? { ...t, dueDate: newDueDate } : t))
-    );
+  const handleEditDueDate = (index, newDueDate) =>
+    setTasks(tasks.map((t, i) => (
+      i === index ? { ...t, dueDate: newDueDate } : t
+    )));
     
     const handleAddSubtask = (taskIndex, text) => {
     if (!text.trim()) return;
@@ -95,6 +101,20 @@ export default function Home() {
       )
     );
   };
+
+  const handleToggleSubtask = (taskIndex, subtaskIndex) =>
+  setTasks(prev =>
+    prev.map((task, i) =>
+      i === taskIndex
+        ? {
+            ...task,
+            subtasks: task.subtasks.map((sub, j) =>
+              j === subtaskIndex ? { ...sub, done: !sub.done } : sub
+            ),
+          }
+        : task
+    )
+  );
 
   const handleEditNotes = (index, newNotes) =>
     setTasks(
@@ -236,12 +256,12 @@ export default function Home() {
         <div className="w-full bg-gray-200 rounded-full h-3">
           <div
             className="bg-blue-600 h-3 rounded-full"
-            style={{ width: `${progress}%` }}
+            style={{ width: `${Math.min(100, Math.round(progress))}%` }}
           ></div>
         </div>
       </div>
 
-      <TaskList
+      {/* <TaskList
         tasks={filteredTasks}
         onDelete={handleDeleteTask}
         onToggleComplete={handleToggleComplete}
@@ -250,12 +270,12 @@ export default function Home() {
         onSave={handleSaveTask}
         onEditPriority={handleEditPriority}
         onEditCategory={handleEditCategory}
-        onEditDueDate={handleDueDate}
+        onEditDueDate={handleEditDueDate}
         onAddSubtask={handleAddSubtask}
         onToggleSubtask={handleToggleSubtask}
         onEditNotes={handleEditNotes}
         onSetRecurring={handleSetRecurring}
-      />
+      /> */}
 
       {tasks.length === 0 && (
         <p className="text-gray-500 italic mt-4">

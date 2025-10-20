@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function NavBar() {
     const [isOpen, setIsOpen] = useState(false);
-    const { user, logout } = useUser();
+    const { user, logout } = useUser?.() || {};
     
     return (
         <nav className="bg-gray-600 text-white p-4 shadow-md">
@@ -14,7 +14,7 @@ export default function NavBar() {
                     My Tasks
                 </Link>
 
-                <Link to="/register" Classname="hover:text-gray-200 block sm:inline">
+                <Link to="/register" className="hover:text-gray-200 block sm:inline">
                     Register
                 </Link>
 

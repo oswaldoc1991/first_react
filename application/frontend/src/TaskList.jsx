@@ -23,7 +23,7 @@ function TaskList({
         <li
           key={index}
           className={`bg-white rounded-lg shadow-md border border-gray-200 p-4 ${
-            t.complete ? `line-through text-gray-400` : ``
+            t.completed ? `line-through text-gray-400` : ``
           }`}
         >
           {t.isEditing ? (
@@ -37,7 +37,7 @@ function TaskList({
             />
             <input 
               type="date"
-              value={t.DueDate || ""}
+              value={t.dueDate || ""}
               onChange={(e) => onEditDueDate(index, e.target.value)}
               className="border px-2 py-1 rounded mb-2 w-full"            
             />
@@ -191,7 +191,7 @@ function TaskList({
             <div className="mt-3">
               <h4 className="font-semibold text-sm">Recurring: </h4>
               <select
-                value={t.recuring || ""}
+                value={t.recurring || ""}
                 onChange={(e) => onSetRecurring(index, e.target.value)}
                 className="border px-2 py-1 rounded"
               >

@@ -1,15 +1,15 @@
-import React from 'react'
+import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom'
-import './index.css'
-import App from './App.jsx'
-import { UserProvider } from './UserContext.jsx'
+import App from './App.jsx';
+import './index.css';
+import { BrowserRouter } from 'react-router-dom';
+import { UserProvider } from './UserContext.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <UserProvider>
-        <App />
+      <App />
       </UserProvider>
     </BrowserRouter>
   </React.StrictMode>

@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, Children } from 'react';
+import { createContext, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // creating the context of the user itself
@@ -8,7 +8,7 @@ const UserContext = createContext();
 export const useUser = () => useContext(UserContext);
 
 // provider component 
-export const UserProvider = ({ Children }) => {
+export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ export const UserProvider = ({ Children }) => {
 
     return (
         <UserContext.Provider value={{ user, login, logout }}>
-            {Children}
+            {children}
         </UserContext.Provider>
     );
 };
